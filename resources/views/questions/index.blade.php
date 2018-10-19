@@ -9,12 +9,13 @@
                         <div class="d-flex aling-items-center">
                             <h2>All Questions</h2>
                             <div class="ml-auto">
-                                <a href="{{ route('question.create') }}" class="btn btn-outline-secondary">Back to all questions</a>
+                                <a href="{{ route('questions.create') }}" class="btn btn-outline-secondary">Back to all questions</a>
                             </div>
                         </div>
                     </div>
 
                     <div class="card-body">
+                        @include('layouts._messages')
                         @foreach($questions as $question)
                             <div class="media">
                                 <div class="d-flex flex-column counters">

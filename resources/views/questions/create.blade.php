@@ -9,7 +9,7 @@
                         <div class="d-flex aling-items-center">
                             <h2>All Questions</h2>
                             <div class="ml-auto">
-                                <a href="{{ route('question.index') }}" class="btn btn-outline-secondary">Back to all questions</a>
+                                <a href="{{ route('questions.index') }}" class="btn btn-outline-secondary">Back to all questions</a>
                             </div>
                         </div>
                     </div>
@@ -19,24 +19,24 @@
                             @csrf
                             <div class="form-group">
                                 <label for="question-title">Question Title</label>
-                                <input type="text" name="title" id="question-title" class="form-control {{ $errors->has('title') ? 'is-invalid' : '' }}">
-                            </div>
-
+                                <input value="{{ old('title') }}" type="text" name="title" id="question-title" class="form-control {{ $errors->has('title') ? 'is-invalid' : '' }}">
                             @if($errors->has('title'))
-                                <div class="invalid-feedback">
-                                    <strong>{{ $errors->first('title') }}</strong>
-                                </div>
+                                <span class="invalid-feedback">
+                                <strong>{{ $errors->first('title') }}</strong>
+                            </span>
                             @endif
-                            <div class="form-group">
-                                <label for="question-body">Question Title</label>
-                                <textarea type="text" name="body" id="question-body" class="form-control {{ $errors->has('body') ? 'is-invalid' : '' }}" row="10"></textarea>
                             </div>
-
+                            <div class="form-group">
+                                <label for="question-body">Question Body</label>
+                                <textarea type="text" name="body" id="question-body" class="form-control {{ $errors->has('body') ? 'is-invalid' : '' }}" rows="10">
+                                    {{ old('body') }}
+                                </textarea>
                             @if($errors->has('body'))
-                                <div class="invalid-feedback">
-                                    <strong>{{ $errors->first('body') }}</strong>
-                                </div>
+                                <span class="invalid-feedback">
+                                <strong>{{ $errors->first('body') }}</strong>
+                            </span>
                             @endif
+                            </div>
                             <div class="form-group">
                                 <button class="btn btn-outline-primary btn-lg" type="submit">Ask this question</button>
                             </div>
