@@ -29,7 +29,10 @@ class QuestionsController extends Controller
      */
     public function create()
     {
-        return view('questions.create');
+
+        // $question = new Question();
+        // return view('questions.create', compact('question'));
+        return view('questions.create')->with('question', new Question());
     }
 
     /**
@@ -52,7 +55,10 @@ class QuestionsController extends Controller
      */
     public function show(Question $question)
     {
-        //
+        // $question->increment('views'); // or down
+        $question->views = $question->views + 1;
+        $question->save();
+        return view('questions.show', compact('question'));
     }
 
     /**
