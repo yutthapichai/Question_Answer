@@ -69,6 +69,9 @@ class QuestionsController extends Controller
      */
     public function edit(Question $question)
     {
+        if(\Gate::denies('update-question', $question)){ // check auth first will can edit or denies to allows
+            abort(403, 'Access denied');
+        }
         return view('Questions.edit', compact('question'));
     }
 
@@ -81,6 +84,9 @@ class QuestionsController extends Controller
      */
     public function update(AskQuestionRequest $request, Question $question)
     {
+        if(\Gate::denies('update-question', $question)){ // check auth first will can edit or denies to allows
+            abort(403, 'Access denied');
+        }
         $question->update($request->only('title'. 'body'));
         return redirect('/questions')->with('success', "your question has been Update");
     }
@@ -93,6 +99,9 @@ class QuestionsController extends Controller
      */
     public function destroy(Question $question)
     {
+        if(\Gate::denies('delete-question', $question)){ // check auth first will can edit or denies to allows
+            abort(403, 'Access denied');
+        }
         $question->delete();
         return redirect('/questions')->with('success', "your question has been Delete");
     }
