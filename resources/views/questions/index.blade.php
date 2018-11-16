@@ -33,13 +33,13 @@
 
                                 <div class="media-body text-warning">
                                     <div class="d-flex align-items-center">
-                                        <h3 class="mt-0"><a href="{{ $question->url  }}" class="text-dark">{{ $question->title }}</a></h3>
+                                        <h3 class="mt-0"><a href="{{ $question->url  }}" class="text-success">{{ $question->title }}</a></h3>
                                         <div class="ml-auto d-flex">
-                                            @if(Auth::user()->can('update-question', $question))
+                                            @can('update-question', $question)) <!-- or add if(Auth::user()->can() endif-->
                                                 <a href="{{ route('questions.edit', $question->id) }}" class="btn btn-sm btn-outline-info">Edit</a>
-                                            @endif
+                                            @endcan
 
-                                            @if(Auth::user()->can('delete-question', $question))
+                                            @can('delete-question', $question))
                                                 <form class="pl-1" method="post" action="{{ route('questions.destroy', $question->id) }}">
                                                     @method('DELETE') <!-- method_field('DELETE') -->
                                                     @csrf {{-- csrf_token() --}}
@@ -47,13 +47,13 @@
                                                         Delete
                                                     </button>
                                                 </form>
-                                            @endif
+                                            @endcan
                                         </div>
                                     </div>
-                                    <p class="lead text-dark">
+                                    <p class="lead text-info">
                                         Asked by
-                                        <a href="{{ $question->user->url }}" class="text-dark">{{ $question->user->name }}</a>
-                                        <small class="text-muted">{{ $question->created_date }}</small>
+                                        <a href="{{ $question->user->url }}" class="text-info">{{ $question->user->name }}</a>
+                                        <small>{{ $question->created_date }}</small>
                                     </p>
                                     {{ str_limit($question->body, 250) }}
                                     <hr>

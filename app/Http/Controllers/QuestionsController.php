@@ -3,11 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Question;
-use Illuminate\Http\Request;
 use App\Http\Requests\AskQuestionRequest;
+use Illuminate\Support\Facades\Gate;
 
 class QuestionsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth', ['except' => ['index', 'show']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -69,9 +74,10 @@ class QuestionsController extends Controller
      */
     public function edit(Question $question)
     {
-        if(\Gate::denies('update-question', $question)){ // check auth first will can edit or denies to allows
-            abort(403, 'Access denied');
-        }
+        // if(Gate::denies('update-question', $question)){ // check auth first will can edit or denies to allows
+        //    abort(403, 'Access denied');
+        // }
+        $this->authorize("update", $question);
         return view('Questions.edit', compact('question'));
     }
 
@@ -84,9 +90,10 @@ class QuestionsController extends Controller
      */
     public function update(AskQuestionRequest $request, Question $question)
     {
-        if(\Gate::denies('update-question', $question)){ // check auth first will can edit or denies to allows
-            abort(403, 'Access denied');
-        }
+        // if(Gate::denies('update-question', $question)){ // check auth first will can edit or denies to allows
+        //    abort(403, 'Access denied');
+        // }
+        $this->authorize("update", $question);
         $question->update($request->only('title'. 'body'));
         return redirect('/questions')->with('success', "your question has been Update");
     }
@@ -99,9 +106,10 @@ class QuestionsController extends Controller
      */
     public function destroy(Question $question)
     {
-        if(\Gate::denies('delete-question', $question)){ // check auth first will can edit or denies to allows
-            abort(403, 'Access denied');
-        }
+        // if(Gate::denies('delete-question', $question)){ // check auth first will can edit or denies to allows
+        //    abort(403, 'Access denied');
+        // }
+        $this->authorize("delete", $question);
         $question->delete();
         return redirect('/questions')->with('success', "your question has been Delete");
     }
