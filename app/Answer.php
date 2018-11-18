@@ -29,13 +29,13 @@ class Answer extends Model
 
         static::created(function($answer){
             $answer->question->increment('answers_count');
-            $answer->question->save();
             // echo "Answer created\n";
         });
 
         static::deleted(function($answer){
-            $answer->question->answers_count = $answer->question->answers_count - 1;
-            $answer->question->save();
+            $answer->question->decrement('answers_count');
+            // $answer->question->answers_count = $answer->question->answers_count - 1;
+            // $answer->question->save();
         });
 
         // static::saved(function($answer){

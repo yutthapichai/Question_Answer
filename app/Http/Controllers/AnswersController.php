@@ -80,6 +80,6 @@ class AnswersController extends Controller
 
         $answer->delete();
 
-        return redirect()->route('questions.show', $question->slug)->with('success', 'Your answer has been deleted successfully');
+        return back()->with('success', 'Your answer has been deleted successfully');
     }
 }
