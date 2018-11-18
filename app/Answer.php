@@ -33,7 +33,15 @@ class Answer extends Model
         });
 
         static::deleted(function($answer){
-            $answer->question->decrement('answers_count');
+            $ans_quest = $answer->question;
+            $ans_quest->decrement('answers_count');
+            /*
+            if($ans_quest->best_answer_id === $answer->id){
+                $ans_quest->best_answer_id = null;
+                $ans_quest->save();
+            }
+            */
+            // $answer->question->decrement('answers_count'); // or down
             // $answer->question->answers_count = $answer->question->answers_count - 1;
             // $answer->question->save();
         });
@@ -46,5 +54,10 @@ class Answer extends Model
     public function getCreatedDateAttribute()
     {
         return $this->created_at->diffForHumans();
+    }
+
+    public function getStatusAttribute()
+    {
+        return $this->id === $this->question->best_answer_id ? 'vote-accepted' : '';
     }
 }
