@@ -35,11 +35,11 @@
                                     <div class="d-flex align-items-center">
                                         <h3 class="mt-0"><a href="{{ $question->url  }}" class="text-success">{{ $question->title }}</a></h3>
                                         <div class="ml-auto d-flex">
-                                            @can('update-question', $question)) <!-- or add if(Auth::user()->can() endif-->
+                                            @can('update-question', $question) <!-- or add if(Auth::user()->can() endif-->
                                                 <a href="{{ route('questions.edit', $question->id) }}" class="btn btn-sm btn-outline-info">Edit</a>
                                             @endcan
 
-                                            @can('delete-question', $question))
+                                            @can('delete-question', $question)
                                                 <form class="pl-1" method="post" action="{{ route('questions.destroy', $question->id) }}">
                                                     @method('DELETE') <!-- method_field('DELETE') -->
                                                     @csrf {{-- csrf_token() --}}

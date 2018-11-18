@@ -13,11 +13,6 @@ class QuestionsController extends Controller
         $this->middleware('auth', ['except' => ['index', 'show']]);
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         // \DB::enableQueryLog();
@@ -27,11 +22,6 @@ class QuestionsController extends Controller
         // dd(\DB::getQueryLog());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
 
@@ -40,24 +30,12 @@ class QuestionsController extends Controller
         return view('questions.create')->with('question', new Question());
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(AskQuestionRequest $request)
     {
         $request->user()->questions()->create($request->only('title','body'));
         return redirect()->route('questions.index')->with('success', "your question has been submitted");
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Question  $question
-     * @return \Illuminate\Http\Response
-     */
     public function show(Question $question)
     {
         // $question->increment('views'); // or down
@@ -66,12 +44,6 @@ class QuestionsController extends Controller
         return view('questions.show', compact('question'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Question  $question
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Question $question)
     {
         // if(Gate::denies('update-question', $question)){ // check auth first will can edit or denies to allows
@@ -81,13 +53,6 @@ class QuestionsController extends Controller
         return view('Questions.edit', compact('question'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Question  $question
-     * @return \Illuminate\Http\Response
-     */
     public function update(AskQuestionRequest $request, Question $question)
     {
         // if(Gate::denies('update-question', $question)){ // check auth first will can edit or denies to allows
@@ -98,12 +63,6 @@ class QuestionsController extends Controller
         return redirect('/questions')->with('success', "your question has been Update");
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Question  $question
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Question $question)
     {
         // if(Gate::denies('delete-question', $question)){ // check auth first will can edit or denies to allows

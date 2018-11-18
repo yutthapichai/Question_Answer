@@ -33,6 +33,11 @@ class Answer extends Model
             // echo "Answer created\n";
         });
 
+        static::deleted(function($answer){
+            $answer->question->answers_count = $answer->question->answers_count - 1;
+            $answer->question->save();
+        });
+
         // static::saved(function($answer){
         //    echo "Answer saved\n";
         // });
