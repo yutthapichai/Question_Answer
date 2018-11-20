@@ -26,6 +26,7 @@
                                 <a href="#" class="vote-down off" title="This question is not useful">
                                     <i class="fas fa-caret-down fa-3x"></i>
                                 </a>
+                                <!-- check someone has been login // parts is_favorites is = user login = user id-->
                                 <a class="favorite mt-2 {{ Auth::guest() ? 'off' : ($question->is_favorited ? 'favorited' : '') }}"
                                    onclick="event.preventDefault(); document.getElementById('favorite-question-{{ $question->id }}').submit(); "
                                    title="Click to mark as favorite question (Click again to undo)">
