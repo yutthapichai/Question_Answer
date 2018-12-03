@@ -12,13 +12,36 @@
                 @foreach($answers as $answer)
                     <div class="media">
                         <div class="d-flex flex-column vote-controls">
-                            <a href="#" class="vote-up" title="This answer is useful">
+
+                            <a class="vote-up {{ Auth::guest() ? 'off' : '' }}"
+                               onclick="event.preventDefault(); document.getElementById('up-vote-answer-{{ $answer->id }}').submit(); "
+                               title="This answer is useful">
                                 <i class="fas fa-caret-up fa-3x"></i>
                             </a>
-                            <span class="votes-count">1230</span>
-                            <a href="#" class="vote-down off" title="This answer is not useful">
+                            <form id="up-vote-answer-{{ $answer->id }}"
+                                  action="/answers/{{ $answer->id }}/vote"
+                                  method="post"
+                                  class="d-none">
+                                @csrf
+                                <input type="hidden" name="vote" value="1">
+                            </form>
+
+                            <span class="votes-count">{{ $answer->votes_count }}</span>
+
+                            <a class="vote-down {{ Auth::guest() ? 'off' : '' }}"
+                               onclick="event.preventDefault(); document.getElementById('down-vote-answer-{{ $answer->id }}').submit(); "
+                               title="This answer is not useful">
                                 <i class="fas fa-caret-down fa-3x"></i>
                             </a>
+                            <form id="down-vote-answer-{{ $answer->id }}"
+                                  action="/answers/{{ $answer->id }}/vote"
+                                  method="post"
+                                  class="d-none">
+                                @csrf
+                                <input type="hidden" name="vote" value="-1">
+                            </form>
+
+
                             @can('accept', $answer)
                                 <a onclick="event.preventDefault(); document.getElementById('accept-answer-{{ $answer->id }}').submit(); "
                                    class="{{ $answer->status }} mt-2"
